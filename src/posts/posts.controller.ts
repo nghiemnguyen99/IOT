@@ -4,6 +4,9 @@ import Post from "./post.interface";
 import postModel from "./posts.model";
 import PostNotFoundException from "../exceptions/PostNotFoundException";
 import * as mongoose from "mongoose";
+import validationMiddleware from "../middleware/validation.middleware";
+import CreatePostDto from "./post.dto";
+import authMiddleware from "../middleware/auth.middleware";
 class PostsController implements Controller {
   public path = "/posts";
   public router = express.Router();
@@ -14,11 +17,19 @@ class PostsController implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.get(this.path, this.getAllPosts);
+    this.router.patch(
+      `${this.path}/:id`,
+      validationMiddleware(CreatePostDto, true),
+      this.modifyPost
+    );
+    this.router.post(
+      this.path,
+      validationMiddleware(CreatePostDto),
+      this.createPost
+    );
+    this.router.get(this.path, authMiddleware, this.getAllPosts);
     this.router.get(`${this.path}/:id`, this.getPostById);
-    this.router.patch(`${this.path}/:id`, this.modifyPost);
     this.router.delete(`${this.path}/:id`, this.deletePost);
-    this.router.post(this.path, this.createPost);
   }
 
   private getAllPosts = (
