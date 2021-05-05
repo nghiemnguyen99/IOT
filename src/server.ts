@@ -1,12 +1,33 @@
-import App from "./app";
-import PostsController from "./posts/posts.controller";
-import AuthenticationController from "./authentication/authentication.controller";
 import "dotenv/config";
-import { validateEnv } from "./utils/validateEnv";
 import "reflect-metadata";
-import "es6-shim";
-validateEnv();
-const { PORT } = process.env;
-const app = new App([new PostsController(), new AuthenticationController()]);
+import { createConnection } from "typeorm";
+import App from "./app";
+import config from "./ormconfig";
+import PostController from "./model/posts/posts.controller";
+import AuthenticationController from "./authentication/authentication.controller";
+import {
+  StoreController,
+  DriverController,
+  CustomerController,
+  UploadController,
+  FoodController,
+} from "./controller/index";
 
-app.listen();
+(async () => {
+  try {
+    await createConnection(config);
+  } catch (error) {
+    console.log("Error while connecting to the database", error);
+    return error;
+  }
+  const app = new App([
+    new PostController(),
+    new AuthenticationController(),
+    new CustomerController(),
+    new DriverController(),
+    new StoreController(),
+    new UploadController(),
+    new FoodController(),
+  ]);
+  app.listen();
+})();

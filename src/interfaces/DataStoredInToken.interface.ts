@@ -1,6 +1,4 @@
-import { ObjectId } from "mongoose";
-
 interface DataStoredInToken {
-  _id: ObjectId;
+  _id: string;
 }
 export default DataStoredInToken;

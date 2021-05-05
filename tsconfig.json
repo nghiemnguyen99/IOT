@@ -5,8 +5,23 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "moduleResolution": "node",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "listFiles": true,
+    "isolatedModules": false,
+    "suppressImplicitAnyIndexErrors": true
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "typings/browser.d.ts",
+    "typings/main.d.ts",
+    "typings/meteor.d.ts",
+    "typings/meteor_server.d.ts",
+    "src/**/*",
+    "src/common/functioncommon.ts"
+  ],
   "exclude": ["node_modules"]
 }
