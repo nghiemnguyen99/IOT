@@ -19,7 +19,7 @@ class DriverController implements Controller {
 
   private initializeRoutes() {
     this.router.post(
-      this.path,
+        `${this.path}/register`,
       validationMiddleware(CreateCustomerDto),
       this.createPost
     );

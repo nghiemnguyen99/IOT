@@ -10,7 +10,8 @@ import UserBase from "../model/users/user.entity";
 async function authMiddleware(
   request: RequestWithUser,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
+
 ) {
   const postRepository = getRepository(UserBase);
   const cookies = request.cookies;
@@ -39,3 +40,5 @@ async function authMiddleware(
 }
 
 export default authMiddleware;
+
+

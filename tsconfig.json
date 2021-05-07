@@ -21,7 +21,8 @@
     "typings/meteor.d.ts",
     "typings/meteor_server.d.ts",
     "src/**/*",
-    "src/common/functioncommon.ts"
+    "typings/**/*"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "compileOnSave": false
 }

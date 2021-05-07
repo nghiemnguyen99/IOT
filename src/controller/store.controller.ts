@@ -20,8 +20,9 @@ class StoreController implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.post(this.path, this.createPost);
+    this.router.post(`${this.path}/register`, this.createPost);
     this.router.get(`${this.path}/gettest`, this.getAllAddresses);
+    this.router.get(`${this.path}/feedback`, this.getFeedBack);
     this.router.get(this.path, this.getAllPosts);
     this.router.get(`${this.path}/search/:long/:lat`, this.searchStore);
     this.router.get(`${this.path}/:id`, this.getPostById);
@@ -32,6 +33,15 @@ class StoreController implements Controller {
     );
     this.router.delete(`${this.path}/:id`, this.deletePost);
   }
+  private getFeedBack = async (
+      request: express.Request,
+      response: express.Response
+  ) => {
+    const addresses = await this.postRepository.find({
+      relations: ["FeedBack"],
+    });
+    response.send(addresses);
+  };
   private getAllAddresses = async (
     request: express.Request,
     response: express.Response

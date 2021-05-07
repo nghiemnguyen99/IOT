@@ -7,8 +7,9 @@ import {
   OneToMany,
 } from "typeorm";
 import "reflect-metadata";
-import User from "../users/user.entity";
 import Food from "../food/food.entity";
+import FeedBack from "../feedback/feedback.entity";
+import Cart from '../cart/cart.entity'
 @Entity()
 class Store {
   @PrimaryGeneratedColumn("uuid") id: string;
@@ -20,7 +21,7 @@ class Store {
   @Column("text", { nullable: true })
   public password: string;
   @Column("text", { nullable: true })
-  public diachi: string;
+  public address: string;
   @Column("text", { nullable: true })
   public longitude: string;
   @Column("text", { nullable: true })
@@ -28,11 +29,20 @@ class Store {
   @Column("text", { nullable: true })
   public avatar: string;
   @Column("text", { nullable: true })
-  public timservice: string;
+  public timeopen: string;
+  @Column("text", { nullable: true })
+  public timeclose: string;
   @Column("text", { nullable: true })
   public name: string;
+
   @OneToMany(() => Food, (post: Food) => post.storeid)
+  @JoinColumn()
   public food: Food[];
+
+  @OneToMany(() => FeedBack, (FeedBack: FeedBack) => FeedBack.StoreID)
+  public FeedBack: FeedBack[];
+  @OneToMany(() => Cart, (Cart: Cart) => Cart.StoreID)
+  public Cart: Cart[];
 }
 
 export default Store;

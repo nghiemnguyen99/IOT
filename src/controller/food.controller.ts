@@ -19,7 +19,7 @@ class FoodController implements Controller {
 
   private initializeRoutes() {
     this.router.post(
-      this.path,
+        `${this.path}/create`,
       // validationMiddleware(CreateStoreDto),
       this.createPost
     );

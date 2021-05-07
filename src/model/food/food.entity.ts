@@ -8,23 +8,30 @@ import {
 } from "typeorm";
 import "reflect-metadata";
 import Store from "../store/store.entity";
+import Customer from "../customer/customer.entity";
+import Cart from "../cart/cart.entity";
 @Entity()
 class Food {
   @PrimaryGeneratedColumn("uuid") id: string;
 
   @Column("text", { nullable: true })
-  public sdt: string;
+  public namefood: string;
 
   @Column("text", { nullable: true })
-  public firstname: string;
-  @Column("text", { nullable: true })
-  public lastname: string;
+  public image: string;
+
   @Column("int", { nullable: true })
-  public sex: number;
+  public status: number;
+  @Column("int", { nullable: true })
+  public sale: number;
   @Column("text", { nullable: true })
-  public avatar: string;
+  public price: string;
+
   @ManyToOne(() => Store, (author: Store) => author.id)
   public storeid: Store;
+
+  @ManyToOne(() => Cart, (Cart: Cart) => Cart.id)
+  public cart : Cart;
 }
 
 export default Food;

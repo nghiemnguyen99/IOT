@@ -39,6 +39,7 @@ class AuthenticationController implements Controller {
     const secret = process.env.JWT_SECRET;
     const dataStoredInToken: DataStoredInToken = {
       _id: user.id,
+      role:user.email
     };
     return {
       expiresIn,

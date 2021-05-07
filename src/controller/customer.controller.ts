@@ -17,19 +17,14 @@ class CustomerController implements Controller {
   }
 
   private initializeRoutes() {
-    this.router.post(
-      this.path,
-      validationMiddleware(CreateCustomerDto),
-      this.createPost
-    );
+    this.router.post(`${this.path}/register`, validationMiddleware(CreateCustomerDto), this.createPost);
     this.router.get(this.path, authMiddleware, this.getAllPosts);
-    this.router.get(`${this.path}/:id`, this.getPostById);
-    this.router.patch(
-      `${this.path}/:id`,
-      validationMiddleware(CreateCustomerDto, true),
-      this.modifyPost
-    );
+    // this.router.get(`${this.path}/:id`, this.getPostById);
+    this.router.patch(`${this.path}/:id`, validationMiddleware(CreateCustomerDto, true), this.modifyPost);
     this.router.delete(`${this.path}/:id`, this.deletePost);
+    this.router.get(`${this.path}/feeedback`, this.getFeedBack);
+
+
   }
 
   private createPost = async (
@@ -38,7 +33,6 @@ class CustomerController implements Controller {
     next: express.NextFunction
   ) => {
 
-    console.log('123')
     const postData: CreateCustomerDto = request.body;
     if (await this.postRepository.findOne({ email: postData.email })) {
       next(new UserWithThatEmailAlreadyExistsException(postData.email));
@@ -56,7 +50,13 @@ class CustomerController implements Controller {
     const posts = await this.postRepository.find();
     response.send(posts);
   };
-
+  private getFeedBack = async (
+      request: express.Request,
+      response: express.Response
+  ) => {
+    const posts = await this.postRepository.find({relations: ["FeedBack"],});
+    response.send(posts);
+  };
   private getPostById = async (
     request: express.Request,
     response: express.Response,

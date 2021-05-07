@@ -1,10 +1,10 @@
 import User from "../users/user.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import Cart  from "../cart/cart.entity";
 @Entity()
 class Driver extends User {
   @Column("text", { nullable: true })
-  public phone: string;
+  public sdt: string;
 
   @Column("text", { nullable: true })
   public avatar: string;
@@ -13,10 +13,12 @@ class Driver extends User {
   public bikenumber: string;
   @Column("text", { nullable: true })
   public inforbike: string;
-  @Column("text", { nullable: true })
-  public status: string;
+  @Column("int", { nullable: true })
+  public status: number;
   @Column("text", { nullable: true })
   public active_time: string;
+  @OneToMany(() => Cart, (Cart: Cart) => Cart.DriverID)
+  public Cart: Cart[];
 }
 
 export default Driver;

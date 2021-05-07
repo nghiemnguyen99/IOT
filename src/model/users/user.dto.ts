@@ -1,7 +1,6 @@
 import { IsString, IsEmail } from "class-validator";
 
 class CreateUserDto {
-  @IsString()
   public lastname: string;
 
   @IsEmail()
