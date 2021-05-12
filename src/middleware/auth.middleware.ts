@@ -10,11 +10,11 @@ import UserBase from "../model/users/user.entity";
 async function authMiddleware(
   request: RequestWithUser,
   response: Response,
-  next: NextFunction,
-
+  next: NextFunction
 ) {
   const postRepository = getRepository(UserBase);
   const cookies = request.cookies;
+  console.log(cookies);
   if (cookies && cookies.Authorization) {
     const secret = process.env.JWT_SECRET;
     try {
@@ -40,5 +40,3 @@ async function authMiddleware(
 }
 
 export default authMiddleware;
-
-

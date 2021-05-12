@@ -10,7 +10,6 @@ class App {
   public app: express.Application;
   public upload: any;
   constructor(controllers: Controller[]) {
-
     this.app = express();
 
     this.initializeMiddlewares();
@@ -30,7 +29,7 @@ class App {
     this.app.use(express.json());
     this.app.use(cookieParser());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use('/static',authMiddleware,express.static("public"));
+    this.app.use("/static", authMiddleware, express.static("public"));
   }
 
   private initializeControllers(controllers: Controller[]) {

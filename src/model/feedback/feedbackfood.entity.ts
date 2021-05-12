@@ -9,9 +9,9 @@ import {
 import "reflect-metadata";
 import Customer from "../customer/customer.entity";
 
-import Store from "../store/store.entity";
+import Food from "../food/food.entity";
 @Entity()
-class FeedBack {
+class FeedBackFood {
   @PrimaryGeneratedColumn("uuid") id: string;
 
   @Column("text", { nullable: true })
@@ -20,8 +20,8 @@ class FeedBack {
   @ManyToOne(() => Customer, (customer: Customer) => customer.id)
   public CustomerID: Customer;
 
-  @ManyToOne(() => Store, (Store: Store) => Store.id)
-  public StoreID: Store;
+  @ManyToOne(() => Food, (Store: Food) => Store.id)
+  public food: Food;
 }
 
-export default FeedBack;
+export default FeedBackFood;

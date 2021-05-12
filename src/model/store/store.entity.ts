@@ -9,7 +9,7 @@ import {
 import "reflect-metadata";
 import Food from "../food/food.entity";
 import FeedBack from "../feedback/feedback.entity";
-import Cart from '../cart/cart.entity'
+import Cart from "../cart/cart.entity";
 @Entity()
 class Store {
   @PrimaryGeneratedColumn("uuid") id: string;

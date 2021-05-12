@@ -34,8 +34,8 @@ class StoreController implements Controller {
     this.router.delete(`${this.path}/:id`, this.deletePost);
   }
   private getFeedBack = async (
-      request: express.Request,
-      response: express.Response
+    request: express.Request,
+    response: express.Response
   ) => {
     const addresses = await this.postRepository.find({
       relations: ["FeedBack"],
@@ -71,7 +71,13 @@ class StoreController implements Controller {
     request: express.Request,
     response: express.Response
   ) => {
-    const posts = await this.postRepository.find();
+    const posts = await this.postRepository.find({
+      order: {
+        name: "ASC",
+        id: "DESC",
+      },
+    });
+
     response.send(posts);
   };
   private searchStore = async (

@@ -19,12 +19,13 @@ class FoodController implements Controller {
 
   private initializeRoutes() {
     this.router.post(
-        `${this.path}/create`,
+      `${this.path}/create`,
       // validationMiddleware(CreateStoreDto),
       this.createPost
     );
     this.router.get(this.path, this.getAllPosts);
     this.router.get(`${this.path}/gettest`, this.getAllAddresses);
+    this.router.get(`${this.path}/getfeedback`, this.getFeedback);
     this.router.get(`${this.path}/:id`, this.getPostById);
     this.router.patch(
       `${this.path}/:id`,
@@ -39,6 +40,15 @@ class FoodController implements Controller {
   ) => {
     const addresses = await this.postRepository.find({
       relations: ["storeid"],
+    });
+    response.send(addresses);
+  };
+  private getFeedback = async (
+    request: express.Request,
+    response: express.Response
+  ) => {
+    const addresses = await this.postRepository.find({
+      relations: ["food_feedback"],
     });
     response.send(addresses);
   };

@@ -11,7 +11,8 @@ import {
   CustomerController,
   UploadController,
   FoodController,
-  FeedBackController, CartController
+  FeedBackController,
+  CartController,
 } from "./controller/index";
 
 (async () => {
@@ -30,7 +31,7 @@ import {
     new UploadController(),
     new FoodController(),
     new FeedBackController(),
-      new CartController()
+    new CartController(),
   ]);
   app.listen();
 })();

@@ -1,56 +1,87 @@
 import * as express from "express";
-import authMiddleware from "../middleware/auth.middleware";
 import Controller from "../interfaces/controller.interface";
-import validationMiddleware from "../middleware/validation.middleware";
-import UserWithThatEmailAlreadyExistsException from "../exceptions/UserWithThatEmailAlreadyExistsException";
-var multer = require("multer");
-var upload = multer();
-var fs = require("fs");
+import * as multer from "multer";
 
-var type = upload.single("streamfile");
-
+var diskStoragedriver = multer.diskStorage({
+  destination: (req, file, callback) => {
+    // Định nghĩa nơi file upload sẽ được lưu lại
+    callback(null, "public/driver");
+  },
+  filename: (req, file, callback) => {
+    // ở đây các bạn có thể làm bất kỳ điều gì với cái file nhé.
+    // Mình ví dụ chỉ cho phép tải lên các loại ảnh png & jpg
+    // let math = ["image/png", "image/jpeg"];
+    // if (math.indexOf(file.mimetype) === -1) {
+    //   let errorMess = `The file <strong>${file.originalname}</strong> is invalid. Only allowed to upload image jpeg or png.`;
+    //   return callback(errorMess, null);
+    // }
+    // Tên của file thì mình nối thêm một cái nhãn thời gian để đảm bảo không bị trùng.
+    let filename = `${Date.now()}-${file.originalname}`;
+    callback(null, filename);
+  },
+});
+var diskStoragestore = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "public/store");
+  },
+  filename: (req, file, callback) => {
+    let filename = `${Date.now()}-${file.originalname}`;
+    callback(null, filename);
+  },
+});
+var diskStoragefood = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "public/food");
+  },
+  filename: (req, file, callback) => {
+    let filename = `${Date.now()}-${file.originalname}`;
+    callback(null, filename);
+  },
+});
+var diskStoragecustomer = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, "public/customer");
+  },
+  filename: (req, file, callback) => {
+    let filename = `${Date.now()}-${file.originalname}`;
+    callback(null, filename);
+  },
+});
 class UploadController implements Controller {
   public path = "/upload";
   public router = express.Router();
-public upload
+  public upload;
   constructor() {
-
     this.initializeRoutes();
   }
 
   private initializeRoutes() {
-    let diskStorage = multer.diskStorage({
-      destination: (req, file, callback) => {
-        // Định nghĩa nơi file upload sẽ được lưu lại
-        callback(null, "public");
-      },
-      filename: (req, file, callback) => {
-        // ở đây các bạn có thể làm bất kỳ điều gì với cái file nhé.
-        // Mình ví dụ chỉ cho phép tải lên các loại ảnh png & jpg
-        // let math = ["image/png", "image/jpeg"];
-        // if (math.indexOf(file.mimetype) === -1) {
-        //   let errorMess = `The file <strong>${file.originalname}</strong> is invalid. Only allowed to upload image jpeg or png.`;
-        //   return callback(errorMess, null);
-        // }
-        // Tên của file thì mình nối thêm một cái nhãn thời gian để đảm bảo không bị trùng.
-        let filename = `${Date.now()}-${file.originalname}`;
-        callback(null, filename);
-      },
-    });
-    this.upload = multer({ storage: diskStorage });
-    this.router.post(`${this.path}/driver`,this.upload.single("file"), this.update);
-    this.router.post(`${this.path}/store`,this.upload.single("file"), this.update);
-    this.router.post(`${this.path}/user`,this.upload.single("file"), this.update);
-    this.router.post(`${this.path}/food`,this.upload.single("file"), this.update);
+    this.router.post(
+      `${this.path}/driver`,
+      multer({ storage: diskStoragedriver }).single("file"),
+      this.update
+    );
+    this.router.post(
+      `${this.path}/store`,
+      multer({ storage: diskStoragestore }).single("file"),
+      this.update
+    );
+    this.router.post(
+      `${this.path}/customer`,
+      multer({ storage: diskStoragecustomer }).single("file"),
+      this.update
+    );
+    this.router.post(
+      `${this.path}/food`,
+      multer({ storage: diskStoragefood }).single("file"),
+      this.update
+    );
   }
   private update = async (
     request: express.Request,
     response: express.Response
   ) => {
-    console.log(request.body);
-
-    response.send("Oke")
-
+    response.send("Oke");
   };
 }
 

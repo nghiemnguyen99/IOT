@@ -1,6 +1,6 @@
 import User from "../users/user.entity";
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
-import Cart  from "../cart/cart.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Cart from "../cart/cart.entity";
 @Entity()
 class Driver extends User {
   @Column("text", { nullable: true })
