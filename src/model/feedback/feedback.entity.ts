@@ -17,6 +17,9 @@ class FeedBack {
   @Column("text", { nullable: true })
   public content: string;
 
+  @Column("int", { nullable: true })
+  public star: number;
+
   @ManyToOne(() => Customer, (customer: Customer) => customer.id)
   public CustomerID: Customer;
 

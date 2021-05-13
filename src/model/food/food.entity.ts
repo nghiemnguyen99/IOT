@@ -14,6 +14,7 @@ import Store from "../store/store.entity";
 import Customer from "../customer/customer.entity";
 import Cart_Food from "../cart/cart_food.entity";
 import FeedBackFood from "../feedback/feedbackfood.entity";
+import FoodOption from "../optionfood/optionfood.entity";
 @Entity()
 class Food {
   @PrimaryGeneratedColumn("uuid") id: string;
@@ -31,6 +32,9 @@ class Food {
   @Column("text", { nullable: true })
   public price: string;
 
+  @Column("text", { nullable: true })
+  public typer: string;
+
   @ManyToOne(() => Store, (author: Store) => author.id)
   public storeid: Store;
 
@@ -38,8 +42,12 @@ class Food {
   // public cart: Cart;
   @OneToMany((type) => Cart_Food, (userGroup) => userGroup.food)
   food_cart: Cart_Food[];
+
   @OneToMany((type) => FeedBackFood, (userGroup) => userGroup.food)
   food_feedback: FeedBackFood[];
+
+  @OneToMany((type) => FoodOption, (userGroup) => userGroup.foodid)
+  option: FoodOption[];
 }
 
 export default Food;

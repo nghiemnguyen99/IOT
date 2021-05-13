@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 @Entity()
-class UserBase {
+class Voucher {
   @PrimaryGeneratedColumn("uuid") id: string;
 
   @Column("text", { nullable: true })
@@ -24,4 +24,4 @@ class UserBase {
   public role: string;
 }
 
-export default UserBase;
+export default Voucher;

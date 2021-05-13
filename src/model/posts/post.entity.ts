@@ -1,6 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import "reflect-metadata";
-@Entity()
 class Post {
   @PrimaryGeneratedColumn()
   public id?: number;
