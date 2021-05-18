@@ -4,15 +4,6 @@ import { createConnection } from "typeorm";
 import App from "./app";
 import config from "./ormconfig";
 import AuthenticationController from "./authentication/authentication.controller";
-import {
-  StoreController,
-  DriverController,
-  CustomerController,
-  UploadController,
-  FoodController,
-  FeedBackController,
-  CartController,
-} from "./controller/index";
 
 (async () => {
   try {
@@ -21,15 +12,6 @@ import {
     console.log("Error while connecting to the database", error);
     return error;
   }
-  const app = new App([
-    new AuthenticationController(),
-    new CustomerController(),
-    new DriverController(),
-    new StoreController(),
-    new UploadController(),
-    new FoodController(),
-    new FeedBackController(),
-    new CartController(),
-  ]);
+  const app = new App([new AuthenticationController()]);
   app.listen();
 })();
