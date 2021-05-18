@@ -6,22 +6,19 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 @Entity()
-class Voucher {
+class Infor {
   @PrimaryGeneratedColumn("uuid") id: string;
 
   @Column("text", { nullable: true })
-  public firstname: string;
+  public deviceid: string;
   @Column("text", { nullable: true })
-  public lastname: string;
+  public doam: string;
 
   @Column("text", { nullable: true })
-  public email: string;
+  public nhietdo: string;
 
   @Column("text", { nullable: true })
-  public password: string;
-
-  @Column("text", { nullable: true })
-  public role: string;
+  public time: string;
 }
 
-export default Voucher;
+export default Infor;
