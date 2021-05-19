@@ -21,6 +21,9 @@ class UserBase {
   public password: string;
 
   @Column("text", { nullable: true })
+  public deviceid: string;
+
+  @Column("text", { nullable: true })
   public role: string;
 }
 
