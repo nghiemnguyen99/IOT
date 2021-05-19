@@ -7,7 +7,7 @@ import validationMiddleware from "../../middleware/validation.middleware";
 import Infor from "./infor.entity";
 import RequestWithUser from "../../interfaces/requestWithUser.interface";
 class InforController implements Controller {
-  public path = "/posts";
+  public path = "/infor";
   public router = express.Router();
   private postRepository = getRepository(Infor);
 
