@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "es2017",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "listFiles": true,
+    "isolatedModules": false,
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "include": [
+    "typings/browser.d.ts",
+    "typings/main.d.ts",
+    "typings/meteor.d.ts",
+    "typings/meteor_server.d.ts",
+    "src/**/*",
+    "typings/**/*"
+  ],
+  "exclude": ["node_modules"],
+  "compileOnSave": false
+}
