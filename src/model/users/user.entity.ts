@@ -10,21 +10,16 @@ class UserBase {
   @PrimaryGeneratedColumn("uuid") id: string;
 
   @Column("text", { nullable: true })
-  public firstname: string;
-  @Column("text", { nullable: true })
-  public lastname: string;
-
-  @Column("text", { nullable: true })
-  public email: string;
-
+  public username: string;
   @Column("text", { nullable: true })
   public password: string;
 
   @Column("text", { nullable: true })
-  public deviceid: string;
-
   @Column("text", { nullable: true })
   public role: string;
+
+  @Column("text")
+  public deviceid: string;
 }
 
 export default UserBase;

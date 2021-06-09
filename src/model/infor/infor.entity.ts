@@ -11,11 +11,18 @@ class Infor {
 
   @Column("text", { nullable: true })
   public deviceid: string;
-  @Column("text", { nullable: true })
-  public doam: string;
 
   @Column("text", { nullable: true })
-  public nhietdo: string;
+  public doamdat: string;
+  @Column("text", { nullable: true })
+  public doamkk: string;
+  @Column("text", { nullable: true })
+  public nhietdokk: string;
+  @Column("text", { nullable: true })
+  public den: string;
+
+  @Column("text", { nullable: true })
+  public maybom: string;
 
   @Column("text", { nullable: true })
   public time: string;

@@ -25,6 +25,7 @@ class InforController implements Controller {
     response: express.Response
   ) => {
     const postData: Infor = request.body;
+    console.log(postData);
     postData.time = new Date().getTime().toString();
     const newPost = this.postRepository.create(postData);
     await this.postRepository.save(newPost);

@@ -39,7 +39,7 @@ class AuthenticationController implements Controller {
     const secret = process.env.JWT_SECRET;
     const dataStoredInToken: DataStoredInToken = {
       _id: user.id,
-      role:user.email
+      role: user.username,
     };
     return {
       expiresIn,
@@ -54,8 +54,8 @@ class AuthenticationController implements Controller {
   ) => {
     const userData: CreateUserDto = request.body;
 
-    if (await this.userRepository.findOne({ email: userData.email })) {
-      next(new UserWithThatEmailAlreadyExistsException(userData.email));
+    if (await this.userRepository.findOne({ username: userData.username })) {
+      next(new UserWithThatEmailAlreadyExistsException(userData.username));
     } else {
       const hashedPassword = await bcrypt.hash(userData.password, 10);
       const user = await this.userRepository.create({
@@ -86,7 +86,9 @@ class AuthenticationController implements Controller {
     next: express.NextFunction
   ) => {
     const logInData: LogInDto = request.body;
-    const user = await this.userRepository.findOne({ email: logInData.email });
+    const user = await this.userRepository.findOne({
+      username: logInData.username,
+    });
     if (user) {
       const isPasswordMatching = await bcrypt.compare(
         logInData.password,
