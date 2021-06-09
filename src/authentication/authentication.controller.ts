@@ -12,6 +12,8 @@ import LogInDto from "./logIn.dto";
 import TokenData from "../interfaces/TokenData.interface";
 import DataStoredInToken from "../interfaces/DataStoredInToken.interface";
 import UserBase from "../model/users/user.entity";
+import authMiddleware from "../middleware/auth.middleware";
+import HttpException from "../exceptions/HttpException";
 class AuthenticationController implements Controller {
   public path = "/auth";
   public router = express.Router();
@@ -25,6 +27,7 @@ class AuthenticationController implements Controller {
     this.router.post(
       `${this.path}/register`,
       validationMiddleware(CreateUserDto),
+      authMiddleware,
       this.registration
     );
     this.router.post(
@@ -48,26 +51,36 @@ class AuthenticationController implements Controller {
   }
 
   private registration = async (
-    request: express.Request,
+    request: any,
     response: express.Response,
     next: express.NextFunction
   ) => {
-    const userData: CreateUserDto = request.body;
+    console.log(request.user);
+    if (request.user.role === "admin") {
+      const userData: CreateUserDto = request.body;
 
-    if (await this.userRepository.findOne({ username: userData.username })) {
-      next(new UserWithThatEmailAlreadyExistsException(userData.username));
+      if (
+        await this.userRepository.findOne({
+          username: userData.username,
+          role: userData.role,
+        })
+      ) {
+        next(new UserWithThatEmailAlreadyExistsException(userData.username));
+      } else {
+        const hashedPassword = await bcrypt.hash(userData.password, 10);
+        const user = await this.userRepository.create({
+          ...userData,
+          password: hashedPassword,
+        });
+        console.log(user);
+        await this.userRepository.save(user);
+        user.password = undefined;
+        const tokenData = this.createToken(user);
+        response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+        response.send(user);
+      }
     } else {
-      const hashedPassword = await bcrypt.hash(userData.password, 10);
-      const user = await this.userRepository.create({
-        ...userData,
-        password: hashedPassword,
-      });
-      console.log(user);
-      await this.userRepository.save(user);
-      user.password = undefined;
-      const tokenData = this.createToken(user);
-      response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-      response.send(user);
+      next(new HttpException(400, "Khong co quyen tao tai khoan"));
     }
   };
   private createPost = async (
@@ -88,6 +101,7 @@ class AuthenticationController implements Controller {
     const logInData: LogInDto = request.body;
     const user = await this.userRepository.findOne({
       username: logInData.username,
+      role: logInData.role,
     });
     if (user) {
       const isPasswordMatching = await bcrypt.compare(

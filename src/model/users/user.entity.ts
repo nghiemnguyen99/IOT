@@ -15,7 +15,6 @@ class UserBase {
   public password: string;
 
   @Column("text", { nullable: true })
-  @Column("text", { nullable: true })
   public role: string;
 
   @Column("text")

@@ -6,7 +6,6 @@ class CreateUserDto {
 
   @IsString()
   public password: string;
-  public firstname: string;
   public role: string;
   public deviceid: string;
 }
