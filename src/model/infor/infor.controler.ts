@@ -17,7 +17,7 @@ class InforController implements Controller {
 
   private initializeRoutes() {
     this.router.post(this.path, this.createPost);
-    this.router.get(this.path, this.getAllPosts);
+    this.router.get(`${this.path}/:id`, this.getAllPosts);
   }
 
   private createPost = async (
@@ -36,8 +36,10 @@ class InforController implements Controller {
     request: express.Request,
     response: express.Response
   ) => {
-    const posts = await this.postRepository.find();
-    response.send(posts);
+    const id = request.params.id;
+    const posts = await this.postRepository.find({ deviceid: id });
+
+    response.send(posts[posts.length - 1]);
   };
 }
 

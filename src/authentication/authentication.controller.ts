@@ -112,8 +112,11 @@ class AuthenticationController implements Controller {
         user.password = undefined;
         const tokenData = this.createToken(user);
         response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-
-        response.send({ token: tokenData.token });
+        if (user.role === "customer") {
+          response.send({ token: tokenData.token, deviceid: user.deviceid });
+        } else {
+          response.send({ token: tokenData.token });
+        }
       } else {
         next(new WrongCredentialsException("Password Wrong"));
       }
