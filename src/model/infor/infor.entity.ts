@@ -9,7 +9,7 @@ import {
 class Infor {
   @PrimaryGeneratedColumn("uuid") id: string;
 
-  @Column("text", { nullable: true })
+  @Column("text")
   public deviceid: string;
 
   @Column("text", { nullable: true })

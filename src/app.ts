@@ -4,6 +4,7 @@ import Controller from "./interfaces/controller.interface";
 import errorMiddleware from "./middleware/error.middleware";
 import * as cookieParser from "cookie-parser";
 import * as multer from "multer";
+import * as cors from "cors";
 import "reflect-metadata";
 import authMiddleware from "./middleware/auth.middleware";
 class App {
@@ -33,6 +34,7 @@ class App {
   }
 
   private initializeControllers(controllers: Controller[]) {
+    this.app.use(cors());
     controllers.forEach((controller) => {
       this.app.use("/api", controller.router);
     });

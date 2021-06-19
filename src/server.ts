@@ -3,6 +3,7 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import App from "./app";
 import config from "./ormconfig";
+
 import AuthenticationController from "./authentication/authentication.controller";
 import InforController from "./model/infor/infor.controler";
 (async () => {
@@ -13,5 +14,6 @@ import InforController from "./model/infor/infor.controler";
     return error;
   }
   const app = new App([new AuthenticationController(), new InforController()]);
+
   app.listen();
 })();

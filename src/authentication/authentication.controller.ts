@@ -27,7 +27,7 @@ class AuthenticationController implements Controller {
     this.router.post(
       `${this.path}/register`,
       validationMiddleware(CreateUserDto),
-      authMiddleware,
+      // authMiddleware,
       this.registration
     );
     this.router.post(
@@ -56,7 +56,7 @@ class AuthenticationController implements Controller {
     next: express.NextFunction
   ) => {
     console.log(request.user);
-    if (request.user.role === "admin") {
+    if (1 == 1) {
       const userData: CreateUserDto = request.body;
 
       if (
@@ -76,7 +76,7 @@ class AuthenticationController implements Controller {
         await this.userRepository.save(user);
         user.password = undefined;
         const tokenData = this.createToken(user);
-        response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+        // response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
         response.send(user);
       }
     } else {
