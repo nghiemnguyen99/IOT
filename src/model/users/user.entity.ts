@@ -17,6 +17,9 @@ class UserBase {
   @Column("text", { nullable: true })
   public role: string;
 
+  @Column("text", { nullable: true })
+  public address: string;
+
   @Column("text")
   public deviceid: string;
 }

@@ -30,6 +30,16 @@ class AuthenticationController implements Controller {
       // authMiddleware,
       this.registration
     );
+    this.router.get(
+      `${this.path}/alluser`,
+
+      this.allUser
+    );
+    this.router.post(
+      `${this.path}/update/:id`,
+
+      this.updateUser
+    );
     this.router.post(
       `${this.path}/login`,
       validationMiddleware(LogInDto),
@@ -49,7 +59,27 @@ class AuthenticationController implements Controller {
       token: jwt.sign(dataStoredInToken, secret, { expiresIn }),
     };
   }
+  private allUser = async (
+    request: any,
+    response: express.Response,
+    next: express.NextFunction
+  ) => {
+    let alluser = await this.userRepository.find({ role: "customer" });
+    response.send(alluser);
+  };
+  private updateUser = async (
+    request: any,
+    response: express.Response,
+    next: express.NextFunction
+  ) => {
+    const userid = request.params.id;
+    console.log(userid);
+    const data = request.body;
+    console.log(data);
 
+    let alluser = await this.userRepository.update({ id: userid }, data);
+    response.send(alluser);
+  };
   private registration = async (
     request: any,
     response: express.Response,
